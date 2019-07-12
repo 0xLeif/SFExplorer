@@ -2,7 +2,7 @@
 
 ## SFExplorer
 
-![SFExplorer](Resources/sfexplorer.PNG)
+![SFExplorer](Resources/sfexplorer.jpeg)
 
 ## List of SFSymbols in use
 

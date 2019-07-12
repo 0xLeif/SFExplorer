@@ -694,6 +694,7 @@ enum SF: String, CaseIterable {
                 .map { "\($0)" }
                 .reduce("", +)
         }
+        
         return formattedName
     }
     var image: Image {
@@ -701,11 +702,111 @@ enum SF: String, CaseIterable {
     }
 }
 
+struct SFExplorerEditor: View {
+    private let foregroundColors: [Color] = [.white, .red, .orange, .yellow, .green, .blue, .purple, .black]
+    private let backgroundColors: [Color] = [.black, .white, .red, .orange, .yellow, .green, .blue, .purple]
+    let symbol: SF
+    
+    @State private var foregroundColor: Int = 0
+    @State private var backgroundColor: Int = 0
+    @State private var foregroundCornerRadius: Length = 0
+    @State private var backgroundCornerRadius: Length = 0
+    @State private var width: Length = 200
+    @State private var height: Length = 200
+    @State private var opacity: Double = 1
+    @State private var rotation: Double = 0
+    @State private var xOffset: Length = 0
+    @State private var yOffset: Length = 0
+    
+    var body: some View {
+        VStack {
+            
+            VStack {
+            symbol.image
+                .resizable()
+                .frame(width: width, height: height, alignment: .center)
+                .foregroundColor(foregroundColors[foregroundColor])
+                .cornerRadius(foregroundCornerRadius)
+                .opacity(opacity)
+                .rotationEffect(.degrees(rotation))
+                .offset(x: xOffset, y: yOffset)
+                .background(backgroundColors[backgroundColor]
+                    .cornerRadius(backgroundCornerRadius))
+            
+            }
+            .frame(width: 300, height: 300, alignment: .center)
+            
+            Divider()
+            List {
+                HStack {
+                    Text("ForgroundColor")
+                    Spacer()
+                    Picker(selection: $foregroundColor, label: Text("Color")) {
+                        ForEach(0 ..< foregroundColors.count) {
+                            self.foregroundColors[$0].tag($0)
+                        }
+                    }
+                }
+                HStack {
+                    Text("Foreground CornerRadius")
+                    Spacer()
+                    Slider(value: $foregroundCornerRadius, from: 0, through: 300, by: 1)
+                }
+                HStack {
+                    Text("BackgroundColor")
+                    Spacer()
+                    Picker(selection: $backgroundColor, label: Text("Color")) {
+                        ForEach(0 ..< backgroundColors.count) {
+                            self.backgroundColors[$0].tag($0)
+                        }
+                    }
+                }
+                HStack {
+                    Text("Background CornerRadius")
+                    Spacer()
+                    Slider(value: $backgroundCornerRadius, from: 0, through: 300, by: 1)
+                }
+                HStack {
+                    Text("Width")
+                    Spacer()
+                    Slider(value: $width, from: 1, through: 300, by: 1)
+                }
+                HStack {
+                    Text("Height")
+                    Spacer()
+                    Slider(value: $height, from: 1, through: 300, by: 1)
+                }
+                HStack {
+                    Text("Opacity")
+                    Spacer()
+                    Slider(value: $opacity, from: 0, through: 1, by: 0.01)
+                }
+                HStack {
+                    Text("Rotation")
+                    Spacer()
+                    Slider(value: $rotation, from: 0, through: 360, by: 1)
+                }
+                HStack {
+                    Text("X Offset")
+                    Spacer()
+                    Slider(value: $xOffset, from: -150, through: 150, by: 1)
+                }
+                HStack {
+                    Text("Y Offset")
+                    Spacer()
+                    Slider(value: $yOffset, from: -150, through: 150, by: 1)
+                }
+                
+            }
+        }
+    }
+}
+
 struct ContentView : View {
     var body: some View {
         NavigationView {
             List(SF.allCases.reversed().identified(by: \.self)) { sf in
-                NavigationLink(destination: sf.image.resizable().frame(width: 300, height: 300, alignment: .center)) {
+                NavigationLink(destination: SFExplorerEditor(symbol: sf)) {
                     HStack(alignment: .center) {
                         Spacer()
                         Text(sf.name)
