@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		291AF2C422D919C5009DB0BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 291AF2C322D919C5009DB0BE /* Assets.xcassets */; };
 		291AF2C722D919C5009DB0BE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 291AF2C622D919C5009DB0BE /* Preview Assets.xcassets */; };
 		291AF2CA22D919C5009DB0BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 291AF2C822D919C5009DB0BE /* LaunchScreen.storyboard */; };
+		299140DA22DFE45D00908434 /* SF in Frameworks */ = {isa = PBXBuildFile; productRef = 299140D922DFE45D00908434 /* SF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				299140DA22DFE45D00908434 /* SF in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +93,9 @@
 			dependencies = (
 			);
 			name = SFExplorer;
+			packageProductDependencies = (
+				299140D922DFE45D00908434 /* SF */,
+			);
 			productName = SFExplorer;
 			productReference = 291AF2BA22D919C4009DB0BE /* SFExplorer.app */;
 			productType = "com.apple.product-type.application";
@@ -119,6 +124,9 @@
 				Base,
 			);
 			mainGroup = 291AF2B122D919C4009DB0BE;
+			packageReferences = (
+				299140D822DFE45D00908434 /* XCRemoteSwiftPackageReference "SF" */,
+			);
 			productRefGroup = 291AF2BB22D919C4009DB0BE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -342,6 +350,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		299140D822DFE45D00908434 /* XCRemoteSwiftPackageReference "SF" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zmeriksen/SF";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		299140D922DFE45D00908434 /* SF */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 299140D822DFE45D00908434 /* XCRemoteSwiftPackageReference "SF" */;
+			productName = SF;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 291AF2B222D919C4009DB0BE /* Project object */;
 }
