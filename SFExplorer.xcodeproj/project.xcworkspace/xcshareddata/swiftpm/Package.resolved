@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SF",
+        "repositoryURL": "https://github.com/zmeriksen/SF",
+        "state": {
+          "branch": "master",
+          "revision": "221ba579e6384ad392747f2010ded1cbf39d5e5c",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
