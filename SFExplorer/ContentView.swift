@@ -22,42 +22,26 @@ struct SFExplorerEditor: View {
     @State private var backgroundColorEnabled: Bool = false
     @State private var textExampleEnabled: Bool = false
     @State private var textExampleInput: String = "Hello World!"
-    @State private var foregroundCornerRadius: Length = 0
-    @State private var backgroundCornerRadius: Length = 0
-    @State private var width: Length = 200
-    @State private var height: Length = 200
+    @State private var backgroundCornerRadius: CGFloat = 0
+    @State private var width: CGFloat = 200
+    @State private var height: CGFloat = 200
     @State private var opacity: Double = 1
     @State private var rotation: Double = 0
-    @State private var xOffset: Length = 0
-    @State private var yOffset: Length = 0
+    @State private var xOffset: CGFloat = 0
+    @State private var yOffset: CGFloat = 0
     
     var imageView: some View {
-        HStack {
-            if textExampleEnabled {
-                symbol.image
-                    //                    .cornerRadius(foregroundCornerRadius)
-                    .foregroundColor(foregroundColors[foregroundColor])
-                    .rotationEffect(.degrees(rotation))
-                    .opacity(opacity)
-                    .offset(x: xOffset, y: yOffset)
-                    .background(backgroundColors[backgroundColor]
-                        .cornerRadius(backgroundCornerRadius))
-                Text(textExampleInput)
-            } else {
-                symbol.image
-                    .resizable()
-                    //                    .cornerRadius(foregroundCornerRadius)
-                    .frame(width: width, height: height, alignment: .center)
-                    .foregroundColor(foregroundColors[foregroundColor])
-                    .rotationEffect(.degrees(rotation))
-                    .opacity(opacity)
-                    .offset(x: xOffset, y: yOffset)
-                    .background(backgroundColors[backgroundColor]
-                        .cornerRadius(backgroundCornerRadius))
-            }
-        }
-        .font(fonts[currentFont])
-            .padding()
+            symbol.image
+                .resizable()
+                .frame(width: width, height: height, alignment: .center)
+                .foregroundColor(foregroundColors[foregroundColor])
+                .rotationEffect(.degrees(rotation))
+                .opacity(opacity)
+                .offset(x: xOffset, y: yOffset)
+                .background(backgroundColors[backgroundColor]
+                    .cornerRadius(backgroundCornerRadius))
+                .font(fonts[currentFont])
+                .padding()
     }
     
     var symbolView: some View {
@@ -82,11 +66,6 @@ struct SFExplorerEditor: View {
                     }
                 }
             }
-            //            HStack {
-            //                Text("Foreground CornerRadius")
-            //                Spacer()
-            //                Slider(value: $foregroundCornerRadius, from: 0, through: 300, by: 1)
-            //            }
         }
     }
     
@@ -106,7 +85,7 @@ struct SFExplorerEditor: View {
             HStack {
                 Text("Background CornerRadius")
                 Spacer()
-                Slider(value: $backgroundCornerRadius, from: 0, through: 100, by: 1)
+                Slider(value: $backgroundCornerRadius, in: (0 ... 100))
             }
         }
     }
@@ -116,49 +95,32 @@ struct SFExplorerEditor: View {
             HStack {
                 Text("Width")
                 Spacer()
-                Slider(value: $width, from: 1, through: 300, by: 1)
+                Slider(value: $width, in: (1 ... 300))
             }
             HStack {
                 Text("Height")
                 Spacer()
-                Slider(value: $height, from: 1, through: 300, by: 1)
+                Slider(value: $height, in: (1 ... 300))
             }
             HStack {
                 Text("Opacity")
                 Spacer()
-                Slider(value: $opacity, from: 0, through: 1, by: 0.01)
+                Slider(value: $opacity, in: (0 ... 1), step: 0.01)
             }
             HStack {
                 Text("Rotation")
                 Spacer()
-                Slider(value: $rotation, from: 0, through: 360, by: 1)
+                Slider(value: $rotation, in: (0 ... 360))
             }
             HStack {
                 Text("X Offset")
                 Spacer()
-                Slider(value: $xOffset, from: -150, through: 150, by: 1)
+                Slider(value: $xOffset, in: (-150 ... 150))
             }
             HStack {
                 Text("Y Offset")
                 Spacer()
-                Slider(value: $yOffset, from: -150, through: 150, by: 1)
-            }
-        }
-    }
-    
-    var textControlView: some View {
-        Section {
-            Picker(selection: $currentFont, label: Text("Font")) {
-                ForEach(0 ..< fonts.count) {
-                    Text("Hello World!")
-                        .font(self.fonts[$0]).tag($0)
-                }
-            }
-            Toggle(isOn: $textExampleEnabled) {
-                Text("TextExample")
-            }
-            if textExampleEnabled {
-                TextField("", text: $textExampleInput)
+                Slider(value: $yOffset, in: (-150 ... 150))
             }
         }
     }
@@ -173,7 +135,6 @@ struct SFExplorerEditor: View {
                 foregroundControlsView
                 backgroundControlsView
                 boundsControlViews
-                textControlView
             }
         }
     }
@@ -182,12 +143,12 @@ struct SFExplorerEditor: View {
 struct ContentView : View {
     var body: some View {
         NavigationView {
-            List(SF.allCases.reversed().identified(by: \.self)) { sf in
-                NavigationLink(destination: SFExplorerEditor(symbol: sf)) {
-                    HStack(alignment: .center) {
+            List(SF.allCases, id: \.self) { element in
+                NavigationLink(destination: SFExplorerEditor(symbol: element)) {
+                    HStack {
                         Spacer()
-                        Text(sf.name)
-                        sf.image
+                        Text(element.name)
+                        element.image
                         Spacer()
                     }
                 }
